@@ -3,6 +3,13 @@ package q109;
 public class main {
     
 }
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
 class TreeNode {
     int val;
     TreeNode left;
@@ -17,6 +24,24 @@ class TreeNode {
 }
 class Solution {
     public TreeNode sortedListToBST(ListNode head) {
-        
+        return build(head , null);
+    }
+    public TreeNode build(ListNode head , ListNode tail){
+        if(head == tail) return null;
+        ListNode mid = getMid(head ,tail);
+        TreeNode root = new TreeNode(mid.val);
+        root.left = build(head, mid);
+        root.right = build(mid.next, tail);
+        return root;
+
+    }
+    public ListNode getMid(ListNode head , ListNode tail){
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast!=tail&&fast.next!=tail){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
     }
 }
